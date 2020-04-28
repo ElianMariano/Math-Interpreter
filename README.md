@@ -105,7 +105,7 @@ The process of interpreting and calculating the mathematical expression is divid
 
 In this step, the program will split the input into every word the user has given, to do so, the program will first collect every character and test if it matches with the types of data the program should receive normally(Constants, Numbers, Functions and Operators), if any exception occurs, the program will display an error corresponding with the mistake that was made.
 
-### Data Structuting
+### Data Structuring
 
 In this step, the program will take the sliced data given by the previous process and organize this data into a *Binary tree*, a data structure that has two childs or less for every ***Node***. This data structure fits right to this purpose, because it organizes the *Operator* as a parent ***Node***, and the *Operands* as a child. Take the expression **(10 + 3\*(7+8))/5** for example, the corresponding *Binary Tree* will be something like:
 
@@ -115,4 +115,4 @@ In this step, the program will take the sliced data given by the previous proces
 
 ### Calculating the result
 
-Finally, to calculate the result the program will make a search in the *Binary tree* called *Preorder*. This search will organizes the data based in the way a function takes its arguments. For example, given the expression **10 + 2**, the program rather than interpret it as we normally do, it will interpret it as **+ 10 2**, or in the programming context **add(10, 2)**. With all of this done, the program will simply call the function corresponding to the operation which is being calculated, and show the final result to the user.
+Finally, to calculate the result, the program will make a *Preorder* search in the *Binary tree*. This search will organizes the data based in the way a function takes its arguments. For example, given the expression **10 + 2**, the program rather than interpret it as we normally do, it will interpret it as **+ 10 2**, or in the programming context **add(10, 2)**. With all of this done, the program will simply call the function corresponding to the operation which is being calculated, and show the final result to the user.
