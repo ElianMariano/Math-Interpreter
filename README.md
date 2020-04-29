@@ -3,7 +3,8 @@ Math Interpreter collects data from string and calculates the mathematical resul
 
 ## Compile and run
 
-The program compiles with *Make*, so to compile it, just type make into the terminal window. The program will generate a several list of object files inside the *build* folder. To run it, enter the folder using *cd* command and type *./output*. The program is called using flags to get information to execution. By default, if the program receive no flags, it will simply show usage information.
+The program compiles with *Make*, so to compile it, just type make into the terminal window. The program will generate a several list of object files inside the *build* folder and a *output* file will be created inside the root folder, to run it, just type *./output*. 
+The program is called using flags to get information for execution. By default, if the program receive no flags, it will simply show usage information.
 
 ### Mode
 
@@ -16,12 +17,14 @@ The program has two modes: *Radians* and *Degrees*. The first one considers PI c
     <td>-e flag</td>
     <td>-d flag</td>
     <td>-r flag</td>
+    <td>-help flag</td>
   </td>
   <tr>
     <td>Executes the program as an interpreter</td>
     <td>Takes an expression after the flag and returns the result</td>
     <td>Executes in degree mode</td>
     <td>Executes in radian mode</td>
+    <td>Show usage and help information</td>
   </tr>
 </table>
 
@@ -110,7 +113,7 @@ In this step, the program will split the input into every word the user has give
 In this step, the program will take the sliced data given by the previous process and organize this data into a *Binary tree*, a data structure that has two childs or less for every ***Node***. This data structure fits right to this purpose, because it organizes the *Operator* as a parent ***Node***, and the *Operands* as a child. Take the expression **(10 + 3\*(7+8))/5** for example, the corresponding *Binary Tree* will be something like:
 
 <p align="center">
-  <img src="binary-tree.png" alt="Binary tree for expression (10 + 3*(7+8)/5)" height="280px">
+  <img src="assets/binary-tree.png" alt="Binary tree for expression (10 + 3*(7+8)/5)" height="280px">
 </p>
 
 ### Calculating the result
