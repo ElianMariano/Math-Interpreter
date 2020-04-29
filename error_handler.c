@@ -4,3 +4,9 @@
     the user.
     Every error will have and corresponding code.
 */
+
+#include "error_handler.h"
+
+void get_error(int code){
+
+}
