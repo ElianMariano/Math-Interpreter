@@ -4,6 +4,6 @@
 
 int sanitize_flags(int argc, char **argv);
 
-int sanitize_espression(char *exp, int length, int mode);
+int sanitize_expression(char *exp, int length, int mode);
 
 #endif

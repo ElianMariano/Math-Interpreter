@@ -1,22 +1,15 @@
 CC=gcc
 DIR=build
-OBJ=$(shell ls *.o)
+OBJ = main.o error_handler.o content_sanitizer.o binary_tree.o info.o
 
-output: error_handler.o content_sanitizer.o binary_tree.o main.o
-	$(CC) -o output main.o error_handler.o content_sanitizer.o binary_tree.o
+output: $(OBJ)
+	@echo "Compiling object files $^"
+	$(CC) -o output $^
 	mv *.o $(DIR)
 
-main.o: main.c
-	$(CC) -c main.c
-
-error_handler.o: error_handler.c error_handler.h
-	$(CC) -c error_handler.c
-
-content_sanitizer.o: content_sanitizer.c content_sanitizer.h
-	$(CC) -c content_sanitizer.c
-
-binary_tree.o: binary_tree.c binary_tree.h
-	$(CC) -c binary_tree.c
+%.o: %.c
+	@echo "Compiling file $<"
+	$(CC) -c $<
 
 clear:
 	rm -rf output
