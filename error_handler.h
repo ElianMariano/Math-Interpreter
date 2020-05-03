@@ -10,6 +10,9 @@
     [4] Expected a expression, but a flag is received
 */
 
+#define COLOR_RED "\x1b[31m"
+#define COLOR_RESET "\x1b[0m"
+
 // Stores special error info
 char *errinfo;
 

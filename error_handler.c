@@ -7,31 +7,34 @@
 
 #include "error_handler.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void get_error(int code){
     switch(code){
         case 1:
-            printf("[ERROR]:\n");
+            printf(COLOR_RED "[ERROR]:\n");
             printf("Flag '%s' is not a valid flag!\n", errinfo);
-            printf("Thown error code %d\n", code);
+            printf("Thown error code [%d]" COLOR_RESET "\n" , code);
             break;
         case 2:
-            printf("[ERROR]:\n");
+            printf(COLOR_RED "[ERROR]:\n");
             printf("Flag '%s' is duplicated!\n", errinfo);
-            printf("Thown error code %d\n", code);
+            printf("Thown error code [%d]" COLOR_RESET "\n", code);
             break;
         case 3:
-            printf("[ERROR]:\n");
+            printf(COLOR_RED "[ERROR]:\n");
             printf("Mathematical expression expected!\n");
-            printf("Thown error code %d\n", code);
+            printf("Thown error code [%d]" COLOR_RESET "\n", code);
             break;
         case 4:
-            printf("[ERROR]:\n");
-            printf("Expected mathamatic expression, but '%s' flag received\n", errinfo);
-            printf("Thown error code: %d\n", code);
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Expected mathematic expression, but '%s' flag was received!\n", errinfo);
+            printf("Thown error code: [%d]" COLOR_RESET "\n", code);
             break;
         default:
-            printf("Unknown error code!\n");
+            printf(COLOR_RED "Unknown error code!" COLOR_RESET "\n");
             break;
     }
+
+    free(errinfo);
 }
