@@ -29,7 +29,7 @@ The program has two modes: *Radians* and *Degrees*. The first one considers PI c
 </table>
 
 ## Reserverd keywords and functions accepted
-The following characters and words will be acceped, they are divided in four categories: *Constants*, *Numbers*, *Functions* and *Operators*.
+The following characters and words will be acceped, they are divided in four categories: *Constants*, *Numbers*, *Functions*, *Operators* and *Separators*.
 
 ### Constants
 <table>
@@ -99,6 +99,10 @@ The following characters and words will be acceped, they are divided in four cat
     <td>Division</td>
   </tr>
 </table>
+
+### Separators
+
+The only separator accepted is the parenthesis separator. It can be the opening paranthesis '(' and the closing parenthesis ')', as well. Separators are useful to set the priority of the expression, for example, the **10 + 10 / 5** is different that **(10 + 10)/5**.
 
 ## How it works
 
