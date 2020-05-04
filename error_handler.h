@@ -8,6 +8,8 @@
     [2] Flag is duplicated
     [3] Mathematical expression expected
     [4] Expected a expression, but a flag is received
+    [5] Entry mode is not defined
+    [6] Two Entry modes were given
 */
 
 #define COLOR_RED "\x1b[31m"

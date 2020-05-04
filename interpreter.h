@@ -8,6 +8,6 @@
 #define INTERPRETER_H
 
 // Initializes the interpreter
-void init_interpreter();
+void init_interpreter(int mode);
 
 #endif

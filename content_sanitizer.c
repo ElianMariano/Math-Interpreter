@@ -19,9 +19,11 @@
 
 int sanitize_flags(int argc, char **argv){
     char *flags[5]= {"-i", "-e", "-d", "-r", "-help"};
-    char *expression;
+    char *expression = NULL;
     // Pass degree mode as default
     int mode = DEGREE;
+    // Stores the entry mode
+    int entry_mode = 0;
 
     // Flags provided by the user
     char **in_flags;
@@ -50,7 +52,7 @@ int sanitize_flags(int argc, char **argv){
     // Verify the errors in the inputs
     for (int i = 0;i < argc-1;i++){
         if (strcmp(in_flags[i], flags[0]) == 0){
-            init_interpreter();
+            entry_mode = INTERPRETER;
         }
         else if (strcmp(in_flags[i], flags[1]) == 0){
             bool is_flag_received = false;
@@ -80,6 +82,9 @@ int sanitize_flags(int argc, char **argv){
             expression = (char*) malloc(sizeof(char*)*(strlen(in_flags[i+1])+1));
             strcpy(expression, in_flags[i+1]);
 
+            // Defines the entry mode
+            entry_mode = EXPRESSION;
+
             // Skips 2 in for loop
             i++;
         }
@@ -102,11 +107,43 @@ int sanitize_flags(int argc, char **argv){
         }
     }
 
+    // true if has two entry modes
+    bool two_entry_modes = false;
+
+    // Verify if it has the two entry modes
+    for (int i = 0;i < argc-1;i++){
+        for (int j = 0;j < argc-1;j++){
+            if (strcmp(in_flags[i], flags[0]) == 0 &&
+                    strcmp(in_flags[j], flags[1]) == 0)
+                    two_entry_modes = true;
+        }
+    }
+
+    if (two_entry_modes){
+        error = 6;
+        free(in_flags);
+
+        return -1;
+    }
+
+    // Verify if there's no entry mode
+    if (entry_mode == 0){
+        error = 5;
+        free(in_flags);
+
+        return -1;
+    }
+
     free(in_flags);
+
+    if (entry_mode == INTERPRETER)
+        init_interpreter(mode);
+    else if (entry_mode == EXPRESSION)
+        sanitize_expression(expression, mode);
 
     return 0;
 }
 
-int sanitize_expression(char *exp, int length, int mode){
+int sanitize_expression(char *exp, int mode){
     return 0;
 }
