@@ -3,7 +3,7 @@
 */
 
 // Executes the program in degree mode
-#define DEGREE 0
+#define DEGREE 1
 
 // Executes the program in radians mode
-#define RADIANS 1
+#define RADIANS 2

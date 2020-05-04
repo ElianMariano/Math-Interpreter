@@ -10,6 +10,7 @@
     [4] Expected a expression, but a flag is received
     [5] Entry mode is not defined
     [6] Two Entry modes were given
+    [7] Help information is requested with other flags
 */
 
 #define COLOR_RED "\x1b[31m"

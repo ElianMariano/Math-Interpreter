@@ -48,6 +48,11 @@ void get_error(int code){
             printf("Interpreter and expression entry mode was given!\n");
             printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
             break;
+        case 7:
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Help information requested with other flags!\n");
+            printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
+            break;
         default:
             printf(COLOR_RED "Unknown error code!" COLOR_RESET "\n");
             break;

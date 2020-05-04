@@ -20,10 +20,12 @@
 int sanitize_flags(int argc, char **argv){
     char *flags[5]= {"-i", "-e", "-d", "-r", "-help"};
     char *expression = NULL;
-    // Pass degree mode as default
-    int mode = DEGREE;
+    // Pass zero mode as default
+    int mode = 0;
     // Stores the entry mode
     int entry_mode = 0;
+    // True if help info is requested
+    bool is_help_requested = false;
 
     // Flags provided by the user
     char **in_flags;
@@ -90,12 +92,14 @@ int sanitize_flags(int argc, char **argv){
         }
         else if (strcmp(in_flags[i], flags[2]) == 0){
             mode = DEGREE;
+            printf("degre mode: %d\n", DEGREE);
         }
         else if (strcmp(in_flags[i], flags[3]) == 0){
             mode = RADIANS;
+            printf("radians mode\n");
         }
         else if (strcmp(in_flags[i], flags[4]) == 0){
-            help_info();
+            is_help_requested = true;
         }
         else{
             errinfo = (char*) malloc(sizeof(char*)*(strlen(in_flags[i])+1));
@@ -127,14 +131,32 @@ int sanitize_flags(int argc, char **argv){
     }
 
     // Verify if there's no entry mode
-    if (entry_mode == 0){
+    if (entry_mode == 0 && !help_info){
         error = 5;
         free(in_flags);
 
         return -1;
     }
 
+    printf("Entry mode: %d, help: %d, mode: %d\n", entry_mode, is_help_requested, mode);
+
+    // Verify if the user requested help with other flags
+    if ((entry_mode != 0 && is_help_requested) || (is_help_requested && mode != 0)){
+        error = 7;
+        free(in_flags);
+
+        return -1;
+    }
+
     free(in_flags);
+
+    // If help is requested show help informations
+    if (is_help_requested)
+        help_info();
+
+    // Set mode as degree if a flag is not received
+    if (mode == 0)
+        mode = DEGREE;
 
     if (entry_mode == INTERPRETER)
         init_interpreter(mode);
