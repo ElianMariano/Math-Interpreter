@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 int sanitize_flags(int argc, char **argv){
     char *flags[5]= {"-i", "-e", "-d", "-r", "-help"};
@@ -92,11 +93,9 @@ int sanitize_flags(int argc, char **argv){
         }
         else if (strcmp(in_flags[i], flags[2]) == 0){
             mode = DEGREE;
-            printf("degre mode: %d\n", DEGREE);
         }
         else if (strcmp(in_flags[i], flags[3]) == 0){
             mode = RADIANS;
-            printf("radians mode\n");
         }
         else if (strcmp(in_flags[i], flags[4]) == 0){
             is_help_requested = true;
@@ -138,8 +137,6 @@ int sanitize_flags(int argc, char **argv){
         return -1;
     }
 
-    printf("Entry mode: %d, help: %d, mode: %d\n", entry_mode, is_help_requested, mode);
-
     // Verify if the user requested help with other flags
     if ((entry_mode != 0 && is_help_requested) || (is_help_requested && mode != 0)){
         error = 7;
@@ -167,5 +164,51 @@ int sanitize_flags(int argc, char **argv){
 }
 
 int sanitize_expression(char *exp, int mode){
+    // Keywords and functions
+    char *constants[2] = {"PI", "e"};
+    char *functions[10] = {"sin", "cos", "tan", "abs", "ln",
+                         "cossec", "sec", "cotg", "pow", "sqrt"};
+    char operators[4] = {'+', '-', '*', '/'};
+    char separators[2] = {'(', ')'};
+
+    // Sanitized input
+    char split_input[strlen(exp)][7];
+
+    for (int i = 0;i < strlen(exp)+1;i++){
+        bool is_empty = false;
+
+        // Verify if it has separators
+        for (int j = 0; j < 2;j++){
+            if (exp[i] == separators[j] && !is_empty){
+                split_input[i][0] = separators[j];
+                split_input[i][1] = '\0';
+            }
+        }
+
+        // Verify operators
+        for (int j = 0;j < 4;j++){
+            if (exp[i] == operators[j] && !is_empty){
+                split_input[i][0] = operators[j];
+                split_input[i][1] = '\0';
+            }
+        }
+    }
+
+    // Remove spaces
+    int count = strlen(exp);
+    for (int i = 0;i < count;i++){
+        if (split_input[i][0] == ' '){
+            for (int j = i;j < count;j++){
+                strcpy(split_input[j], split_input[j+1]);
+                count--;
+            }
+        }
+    }
+
+    // Show all splited data
+    printf("Split data:\n");
+    for (int i = 0;i < strlen(exp);i++)
+        printf("%d . data: %s\n", i, split_input[i]);
+
     return 0;
 }
