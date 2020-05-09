@@ -11,6 +11,11 @@
     [5] Entry mode is not defined
     [6] Two Entry modes were given
     [7] Help information is requested with other flags
+
+    Syntax related errors
+    [8] Closing separator required
+    [9] Opening separator required
+    [10] Expression expected inside separator
 */
 
 #define COLOR_RED "\x1b[31m"

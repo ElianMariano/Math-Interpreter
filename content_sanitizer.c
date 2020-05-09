@@ -155,12 +155,13 @@ int sanitize_flags(int argc, char **argv){
     if (mode == 0)
         mode = DEGREE;
 
+    int status = 0;
     if (entry_mode == INTERPRETER)
         init_interpreter(mode);
     else if (entry_mode == EXPRESSION)
-        sanitize_expression(expression, mode);
+        status = sanitize_expression(expression, mode);
 
-    return 0;
+    return status;
 }
 
 int sanitize_expression(char *exp, int mode){
@@ -168,47 +169,31 @@ int sanitize_expression(char *exp, int mode){
     char *constants[2] = {"PI", "e"};
     char *functions[10] = {"sin", "cos", "tan", "abs", "ln",
                          "cossec", "sec", "cotg", "pow", "sqrt"};
-    char operators[4] = {'+', '-', '*', '/'};
-    char separators[2] = {'(', ')'};
+    char *operators[4] = {"+", "-", "*", "/"};
+    char *separators[2] = {"(", ")"};
 
-    // Sanitized input
-    char split_input[strlen(exp)][7];
-
-    for (int i = 0;i < strlen(exp)+1;i++){
-        bool is_empty = false;
-
-        // Verify if it has separators
-        for (int j = 0; j < 2;j++){
-            if (exp[i] == separators[j] && !is_empty){
-                split_input[i][0] = separators[j];
-                split_input[i][1] = '\0';
-            }
-        }
-
-        // Verify operators
-        for (int j = 0;j < 4;j++){
-            if (exp[i] == operators[j] && !is_empty){
-                split_input[i][0] = operators[j];
-                split_input[i][1] = '\0';
-            }
-        }
+    // Verify error 8
+    if (strstr(exp, separators[0]) != NULL &&
+     strstr(exp, separators[1]) == NULL){
+         error = 8;
+         return -1;
     }
 
-    // Remove spaces
-    int count = strlen(exp);
-    for (int i = 0;i < count;i++){
-        if (split_input[i][0] == ' '){
-            for (int j = i;j < count;j++){
-                strcpy(split_input[j], split_input[j+1]);
-                count--;
-            }
-        }
+    // Verify error 9
+    if (strstr(exp, separators[0]) == NULL &&
+     strstr(exp, separators[1]) != NULL){
+         error = 9;
+         return -1;
     }
 
-    // Show all splited data
-    printf("Split data:\n");
-    for (int i = 0;i < strlen(exp);i++)
-        printf("%d . data: %s\n", i, split_input[i]);
+    char *open = strstr(exp, separators[0]);
+    char *close = strstr(exp, separators[1]);
+
+    // Verify error 10
+    if ((close - open) == 1){
+        error = 10;
+        return -1;
+    }
 
     return 0;
 }

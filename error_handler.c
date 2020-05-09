@@ -53,6 +53,21 @@ void get_error(int code){
             printf("Help information requested with other flags!\n");
             printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
             break;
+        case 8:
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Closing separator required!\n");
+            printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
+            break;
+        case 9:
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Opening separator required!\n");
+            printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
+            break;
+        case 10:
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Expression expected inside separator!\n");
+            printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
+            break;
         default:
             printf(COLOR_RED "Unknown error code!" COLOR_RESET "\n");
             break;
