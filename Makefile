@@ -1,6 +1,12 @@
 CC=gcc
 DIR=build
-OBJ = main.o error_handler.o content_sanitizer.o binary_tree.o info.o interpreter.o
+OBJ = main.o \
+      error_handler.o \
+      content_sanitizer.o \
+	  binary_tree.o \
+	  info.o \
+	  interpreter.o \
+	  productions.o
 
 output: $(OBJ)
 	@echo "Compiling object files $^"
