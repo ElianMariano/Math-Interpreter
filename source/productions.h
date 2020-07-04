@@ -2,7 +2,7 @@
 #define PRODUCTIONS_H
 
 // Evaluates an expression
-void exp(char *exp);
+void expr(char *exp);
 
 // Evaluates the term
 void term(char *t);
@@ -11,26 +11,26 @@ void term(char *t);
 void factor(char *t);
 
 // Evaluatee the power function
-void pow(char *t);
+void power(char *t);
 
 // Evaluates the square root function 
-void sqrt(char *t);
+void sqrtt(char *t);
 
 /*
     Functions
 */
 
 // Cosine function
-void cos(char *t);
+void cosine(char *t);
 
 // Sine functiokn
-void sin(char *t);
+void sine(char *t);
 
 // Tangent function
-void tan(char *t);
+void tangent(char *t);
 
 // Absolute function
-void abs(char *t);
+void absolute(char *t);
 
 // Natural log function
 void ln(char *t);

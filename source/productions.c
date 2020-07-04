@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void exp(char *exp){
+void expr(char *exp){
     // Exp function
 }
 
@@ -82,27 +82,27 @@ void factor(char *t){
     free(f);
 }
 
-void pow(char *t){
+void power(char *t){
 
 }
 
-void sqrt(char *t){
+void sqrtt(char *t){
 
 }
 
-void cos(char *t){
+void cosine(char *t){
 
 }
 
-void sin(char *t){
+void sine(char *t){
 
 }
 
-void tan(char *t){
+void tangent(char *t){
 
 }
 
-void abs(char *t){
+void absolute(char *t){
 
 }
 
