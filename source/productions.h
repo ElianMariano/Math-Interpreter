@@ -1,47 +1,48 @@
 #ifndef PRODUCTIONS_H
 #define PRODUCTIONS_H
-
-// Evaluates an expression
-void expr(char *exp);
-
-// Evaluates the term
-void term(char *t);
-
-// Most primitive type of data
-void factor(char *t);
-
-// Evaluatee the power function
-void power(char *t);
-
-// Evaluates the square root function 
-void sqrtt(char *t);
+#include "stack.h"
 
 /*
-    Functions
+    Parses a string to the requested data
+    in the end it builds a stack which represents
+    the mathematical expression
 */
+void parse_data(struct Stack *st, char *str);
 
-// Cosine function
-void cosine(char *t);
+// Stores the whole mathematical expression
+static char *st_exp;
 
-// Sine functiokn
-void sine(char *t);
+// Current token or keyword analyzed
+static char *token;
 
-// Tangent function
-void tangent(char *t);
+// Index of the current character analyzed
+static int lookahead;
 
-// Absolute function
-void absolute(char *t);
+// Stores the value of parenthesis opened
+static int expectParenthesis;
 
-// Natural log function
-void ln(char *t);
+// References the main expression stack
+struct Stack *stack;
 
-// Cossecant function
-void cossec(char *t);
+// Evaluates an expression
+static void expr();
 
-// Secant function
-void sec(char *t);
+// Evaluates the term
+static void term();
 
-// Cotangent function
-void catg(char *t);
+// Most primitive type of data
+static void factor();
+
+// Evaluates a function of one parameter
+static void function();
+
+// Evaluates a function of two parameter
+static void func2();
+
+// Recognize a string as correct and adds it to the stack
+static void recognize(char *token);
+
+// Appends the character in the token variable
+static void append(char c);
 
 #endif

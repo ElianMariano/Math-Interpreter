@@ -9,11 +9,10 @@
     The following produtions will be used to handle the
     majority of tasks performed by this program:
     factor -> digits|(exp)|function|PI|e
-    pow -> pow(exp, exp)
-    sqrt -> sqrt(exp, exp)
+    func2 -> func2(exp, exp)
     function -> fuction(exp)
-            | pow
-            | sqrt
+            | func2(exp, exp)
+            | func2(exp, exp)
     term -> term * factor
         | term / factor
         | factor / term
@@ -22,6 +21,11 @@
        | exp - term
        | term - exp
        | term
+
+    The func2 and function productions are a broad set
+    of mathematical function, func2 represents a set of
+    functions with two parameters and function represents
+    a set of functions with one parameter.
 */
 
 #include "productions.h"
@@ -29,95 +33,98 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void expr(char *exp){
-    // Exp function
+void parse_data(struct Stack *st, char *str){
+    // Stores the needed spece for exp string
+    st_exp = (char*) malloc(sizeof(char)*(strlen(str)+1));
+    // Assign the string to the exp variable
+    strcpy(st_exp, str);
+
+    // Assigns the address to the main stack
+    stack = st;
+
+    // Sets the default value of the expectParenthesis variable
+    expectParenthesis = 0;
+
+    // Requests the neeed value of the token variable
+    token = (char*) malloc(sizeof(char)*30);
+
+    // Starts the lookahead as zero
+    lookahead = 0;
 }
 
-void term(char *t){
-}
+static void expr(){
+    term();
 
-void factor(char *t){
-    // The current index of the string
-    int i = 0;
-    // Stores the extracted token
-    char *f;
-    f = (char*) malloc(sizeof(char*)*3);
-    // If number has point, it will be true
-    bool has_point = false;
+    while (st_exp[lookahead] != '\0'){
+        switch(st_exp[lookahead]){
+            case '+':
+                append('+');
 
-    while (t[i] != '\0'){
-        if (isdigit(t[i]) || t[i] == '.'){
-            if (has_point)
-                printf("Erro\n");
+                recognize(token);
 
-            if (t[i] == '.')
-                has_point = true;
+                term();            
+            break;
+            case '-':
+                append('-');
 
-            if (i > 2){
-                f = (char*) realloc(f, sizeof(char*)*(i+1));
-            }
+                recognize(token);
 
-            f[i] = t[i];
+                term();
+            break;
         }
-        else if (t[i] == '('){
-
-        }
-        else if (t[i] == 'P' && t[i+1] == 'I'){
-
-        }
-        else if (t[i] == 'e'){
-
-        }
-        else if (t[i] == ' '){
-            continue;
-        }
-        else{
-
-        }
-
-        i++;
+        lookahead++;
     }
-
-    free(f);
 }
 
-void power(char *t){
-
+static void term(){
+    
 }
 
-void sqrtt(char *t){
-
+static void factor(){
+    if (isdigit(st_exp[lookahead])){
+        append(st_exp[lookahead]);
+    }
+    else if (st_exp[lookahead] == '.'){
+        append('.');
+    }
 }
 
-void cosine(char *t){
-
+static void function(){
+    if (!isdigit(st_exp[lookahead])){
+        append(st_exp[lookahead]);
+    }
+    else if (st_exp[lookahead] == '('){
+        expectParenthesis++;
+    }
+    else if (st_exp[lookahead] == ')'){
+        expectParenthesis--;
+    }
 }
 
-void sine(char *t){
-
+static void func2(){
+    if (!isdigit(st_exp[lookahead])){
+        append(st_exp[lookahead]);
+    }
+    else if (st_exp[lookahead] == '('){
+        expectParenthesis++;
+    }
+    else if (st_exp[lookahead] == ','){
+        
+    }
+    else if (st_exp[lookahead] == ')'){
+        expectParenthesis--;
+    }
 }
 
-void tangent(char *t){
-
+static void recognize(char *token){
+    push(stack, token);
 }
 
-void absolute(char *t){
+static void append(char c){
+    int length = strlen(token);
 
-}
-
-void ln(char *t){
-
-}
-
-void cossec(char *t){
-
-}
-
-void sec(char *t){
-
-}
-
-void catg(char *t){
-
+    token[length] = c;
+    token[length+1] = '\0';
 }
