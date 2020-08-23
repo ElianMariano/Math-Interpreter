@@ -102,33 +102,37 @@ static void term(){
 
     get_spaces();
 
-    switch (st_exp[lookahead])
-    {
-        case '*':
-            lookahead++;
+    while(st_exp[lookahead] == '*' || st_exp[lookahead] == '/'){
+        switch (st_exp[lookahead])
+        {
+            case '*':
+                lookahead++;
 
-            get_spaces();
+                get_spaces();
 
-            factor();
+                factor();
 
-            append('*');
+                append('*');
 
-            recognize(token);
-        break;
-        case '/':
-            lookahead++;
+                recognize(token);
+            break;
+            case '/':
+                lookahead++;
 
-            get_spaces();
+                get_spaces();
 
-            factor();
+                factor();
 
-            append('/');
+                append('/');
 
-            recognize(token);
-        break;
-        case ')':
-            lookahead++;
-        break;
+                recognize(token);
+            break;
+            case ')':
+                lookahead++;
+            break;
+        }
+
+        get_spaces();
     }
 }
 
@@ -155,8 +159,23 @@ static void factor(){
         if (strlen(token) != 0)
             recognize(token);
     }
-    else if (st_exp[lookahead] == '(') {
+    else if (strcmp(get_substring(2), "PI") == 0){
+        strcpy(token, "PI");
+
+        recognize(token);
+
+        lookahead += 2;
+    }
+    else if (st_exp[lookahead] == 'e'){
+        append('e');
+
+        recognize(token);
+
         lookahead++;
+    }
+    else if (st_exp[lookahead] == '(') {
+        while(st_exp[lookahead] == '(')
+            lookahead++;
 
         expr();
     }
@@ -215,7 +234,19 @@ static void append(char c){
     }
 }
 
+static char* get_substring(int length){
+    char* str = (char*) malloc(sizeof(char)*length+1);
+
+    for (int i = lookahead;i < (lookahead+length);i++){
+        str[i] = st_exp[i];
+    }
+
+    str[length+1] = '\0';
+
+    return str;
+}
+
 static void get_spaces(){
-    while(st_exp[lookahead] == ' ')
+    while(st_exp[lookahead] == ' ' || st_exp[lookahead] == '\t')
         lookahead++;
 }

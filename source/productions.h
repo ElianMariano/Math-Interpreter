@@ -47,6 +47,9 @@ static void recognize(char *token);
 // Appends the character in the token variable
 static void append(char c);
 
+// Get next substring of given length
+static char* get_substring(int length);
+
 // Gets the space of the expression
 static void get_spaces();
 
