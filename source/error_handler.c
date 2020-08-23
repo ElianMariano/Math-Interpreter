@@ -68,6 +68,13 @@ void get_error(int code){
             printf("Expression expected inside separator!\n");
             printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
             break;
+        case 11:
+            printf(COLOR_RED "[ERROR]:\n");
+            printf("Could not recognize number format: %s\n", errinfo);
+            printf("Thrown error code: [%d]" COLOR_RESET "\n", code);
+
+            free(errinfo);
+            break;
         default:
             printf(COLOR_RED "Unknown error code!" COLOR_RESET "\n");
             break;

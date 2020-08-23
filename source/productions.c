@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include "stack.h"
 #include "productions.h"
+#include "error_handler.h"
 
 int parse_data(struct Stack *st, char *str){
     // Stores the needed spece for exp string
@@ -57,6 +58,8 @@ int parse_data(struct Stack *st, char *str){
 
     // Inits the expression loop
     expr();
+
+    return 0;
 }
 
 static void expr(){
@@ -86,6 +89,9 @@ static void expr(){
                 append('-');
 
                 recognize(token);
+            break;
+            case ')':
+                lookahead++;
             break;
         }
     }
@@ -120,17 +126,40 @@ static void term(){
 
             recognize(token);
         break;
+        case ')':
+            lookahead++;
+        break;
     }
 }
 
 static void factor(){
-    while(isdigit(st_exp[lookahead]) || st_exp[lookahead] == '.'){
-        append(st_exp[lookahead]);
-        lookahead++;
-    }
+    if (isdigit(st_exp[lookahead])){
+        bool hasPoint = false;
 
-    if (strlen(token) != 0)
-        recognize(token);
+        while(isdigit(st_exp[lookahead]) || st_exp[lookahead] == '.'){
+            append(st_exp[lookahead]);
+            lookahead++;
+
+            if (st_exp[lookahead] == '.' && hasPoint){
+                error = 11;
+
+                strcpy(errinfo, token);
+
+                return;
+            }
+
+            if (st_exp[lookahead] == '.')
+                hasPoint = true;
+        }
+
+        if (strlen(token) != 0)
+            recognize(token);
+    }
+    else if (st_exp[lookahead] == '(') {
+        lookahead++;
+
+        expr();
+    }
 }
 
 static void function(){
