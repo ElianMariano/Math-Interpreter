@@ -114,7 +114,7 @@ In this step, the program will split the input into every word the user has give
 
 ### Data Structuring
 
-In this step, the program will take the sliced data given by the previous process and organize this data into a *Binary tree*, a data structure that has two childs or less for every ***Node***. This data structure fits right to this purpose, because it organizes the *Operator* as a parent ***Node***, and the *Operands* as a child. Take the expression **(10 + 3\*(7+8))/5** for example, the corresponding *Binary Tree* will be something like:
+In this step, the program will convert the given string to its *post fixed* representation, it basically means that the numbers will come first and the operations will come later, and the expression will be organized according with the operator precedence. Example: **2 + (4 - 3)** will be **4 3 - 2 +**. This data can also be represented as a *Binary tree*, a data structure that has two childs or less for every ***Node***. This data structure fits right to this purpose, because it organizes the *Operator* as a parent ***Node***, and the *Operands* as a child. Take the expression **(10 + 3\*(7+8))/5** for example, the corresponding *Binary Tree* will be something like:
 
 <p align="center">
   <img src="assets/binary-tree.png" alt="Binary tree for expression (10 + 3*(7+8)/5)" height="280px">
@@ -122,4 +122,4 @@ In this step, the program will take the sliced data given by the previous proces
 
 ### Calculating the result
 
-Finally, to calculate the result, the program will make a *Preorder* search in the *Binary tree*. This search will organizes the data based in the way a function takes its arguments. For example, given the expression **10 + 2**, the program rather than interpret it as we normally do, it will interpret it as **+ 10 2**, or in the programming context **add(10, 2)**. With all of this done, the program will simply call the function corresponding to the operation which is being calculated, and show the final result to the user.
+Finally, the *post fixed* result will be filled in a stack data structure, in order that when a data is popped out of it, it will be stored in a argumment variable if it's a number, or it will assign the operation type (sum, subtraction, etc). Doing this, the data that will be organized based in the way a function takes its arguments. For example, given the expression **10 + 2**, the program rather than interpret it as we normally do, it will interpret it as **+ 10 2**, or in the programming context **add(10, 2)**. With all of this done, the program will simply call the function corresponding to the operation which is being calculated, and show the final result to the user.
