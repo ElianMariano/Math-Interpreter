@@ -1,13 +1,15 @@
 #ifndef PRODUCTIONS_H
 #define PRODUCTIONS_H
 #include "stack.h"
+#include <stdbool.h>
 
 /*
     Parses a string to the requested data
     in the end it builds a stack which represents
-    the mathematical expression
+    the mathematical expression.
+    Returns zero if an error occurs;
 */
-void parse_data(struct Stack *st, char *str);
+int parse_data(struct Stack *st, char *str);
 
 // Stores the whole mathematical expression
 static char *st_exp;
@@ -15,11 +17,11 @@ static char *st_exp;
 // Current token or keyword analyzed
 static char *token;
 
+// The memory length of the token
+static int length;
+
 // Index of the current character analyzed
 static int lookahead;
-
-// Stores the value of parenthesis opened
-static int expectParenthesis;
 
 // References the main expression stack
 struct Stack *stack;
@@ -44,5 +46,8 @@ static void recognize(char *token);
 
 // Appends the character in the token variable
 static void append(char c);
+
+// Gets the space of the expression
+static void get_spaces();
 
 #endif

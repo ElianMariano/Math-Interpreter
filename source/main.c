@@ -2,6 +2,8 @@
 #include "error_handler.h"
 #include "content_sanitizer.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "productions.h"
 
 int main(int argc, char **argv){
     int status = 0;

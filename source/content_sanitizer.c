@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include "productions.h"
 
 int sanitize_flags(int argc, char **argv){
     char *flags[5]= {"-i", "-e", "-d", "-r", "-help"};
@@ -195,5 +196,10 @@ int sanitize_expression(char *exp, int mode){
         return -1;
     }
 
+    struct Stack* exp_struct = malloc(sizeof(struct Stack));
+
+    parse_data(exp_struct, exp);
+
+    free(exp_struct);
     return 0;
 }

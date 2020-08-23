@@ -28,53 +28,66 @@
     a set of functions with one parameter.
 */
 
-#include "productions.h"
+#include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "stack.h"
+#include "productions.h"
 
-void parse_data(struct Stack *st, char *str){
+int parse_data(struct Stack *st, char *str){
     // Stores the needed spece for exp string
     st_exp = (char*) malloc(sizeof(char)*(strlen(str)+1));
     // Assign the string to the exp variable
     strcpy(st_exp, str);
 
-    // Assigns the address to the main stack
-    stack = st;
-
-    // Sets the default value of the expectParenthesis variable
-    expectParenthesis = 0;
+    // Sets length default value
+    length = 2;
 
     // Requests the neeed value of the token variable
-    token = (char*) malloc(sizeof(char)*30);
+    token = (char*) malloc(sizeof(char)*length);
+    strcpy(token, "");
+
+    // Assigns the stack expression pointer
+    stack = st;
 
     // Starts the lookahead as zero
     lookahead = 0;
+
+    // Inits the expression loop
+    expr();
 }
 
 static void expr(){
-    term();
+    factor();
 
     while (st_exp[lookahead] != '\0'){
+        get_spaces();
+
         switch(st_exp[lookahead]){
             case '+':
+                lookahead++;
+
+                get_spaces();
+
+                factor();
+
                 append('+');
 
                 recognize(token);
-
-                term();            
             break;
             case '-':
+                lookahead++;
+                get_spaces();
+
+                factor();
+
                 append('-');
 
                 recognize(token);
-
-                term();
             break;
         }
-        lookahead++;
     }
 }
 
@@ -83,12 +96,13 @@ static void term(){
 }
 
 static void factor(){
-    if (isdigit(st_exp[lookahead])){
+    while(isdigit(st_exp[lookahead]) || st_exp[lookahead] == '.'){
         append(st_exp[lookahead]);
+        lookahead++;
     }
-    else if (st_exp[lookahead] == '.'){
-        append('.');
-    }
+
+    if (strlen(token) != 0)
+        recognize(token);
 }
 
 static void function(){
@@ -96,10 +110,10 @@ static void function(){
         append(st_exp[lookahead]);
     }
     else if (st_exp[lookahead] == '('){
-        expectParenthesis++;
+        // expectParenthesis++;
     }
     else if (st_exp[lookahead] == ')'){
-        expectParenthesis--;
+        // expectParenthesis--;
     }
 }
 
@@ -108,23 +122,39 @@ static void func2(){
         append(st_exp[lookahead]);
     }
     else if (st_exp[lookahead] == '('){
-        expectParenthesis++;
+        // expectParenthesis++;
     }
     else if (st_exp[lookahead] == ','){
-        
+        // to do
     }
     else if (st_exp[lookahead] == ')'){
-        expectParenthesis--;
+        // expectParenthesis--;
     }
 }
 
 static void recognize(char *token){
-    push(stack, token);
+    // push(stack, token);
+    printf("%s", token);
+
+    strcpy(token, "");
 }
 
 static void append(char c){
-    int length = strlen(token);
+    if (strlen(token) >= 1){
+        token = (char*) realloc(token, sizeof(char*)*(length+1));
 
-    token[length] = c;
-    token[length+1] = '\0';
+        token[length-1] = c;
+        token[length] = '\0';
+
+        length++;
+    }
+    else {
+        token[0] = c;
+        token[1] = '\0';
+    }
+}
+
+static void get_spaces(){
+    while(st_exp[lookahead] == ' ')
+        lookahead++;
 }
