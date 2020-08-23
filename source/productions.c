@@ -60,7 +60,7 @@ int parse_data(struct Stack *st, char *str){
 }
 
 static void expr(){
-    factor();
+    term();
 
     while (st_exp[lookahead] != '\0'){
         get_spaces();
@@ -71,7 +71,7 @@ static void expr(){
 
                 get_spaces();
 
-                factor();
+                term();
 
                 append('+');
 
@@ -81,7 +81,7 @@ static void expr(){
                 lookahead++;
                 get_spaces();
 
-                factor();
+                term();
 
                 append('-');
 
@@ -92,7 +92,35 @@ static void expr(){
 }
 
 static void term(){
-    
+    factor();
+
+    get_spaces();
+
+    switch (st_exp[lookahead])
+    {
+        case '*':
+            lookahead++;
+
+            get_spaces();
+
+            factor();
+
+            append('*');
+
+            recognize(token);
+        break;
+        case '/':
+            lookahead++;
+
+            get_spaces();
+
+            factor();
+
+            append('/');
+
+            recognize(token);
+        break;
+    }
 }
 
 static void factor(){
@@ -137,6 +165,10 @@ static void recognize(char *token){
     printf("%s", token);
 
     strcpy(token, "");
+
+    length = 2;
+
+    token = (char*) realloc(token, sizeof(char*)*length);
 }
 
 static void append(char c){
