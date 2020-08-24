@@ -59,13 +59,15 @@ int parse_data(struct Stack *st, char *str){
     // Inits the expression loop
     expr();
 
+    puts("\n");
+
     return 0;
 }
 
 static void expr(){
-    term();
-
     while (st_exp[lookahead] != '\0'){
+        term();
+
         get_spaces();
 
         switch(st_exp[lookahead]){
