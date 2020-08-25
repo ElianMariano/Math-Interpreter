@@ -102,7 +102,7 @@ The following characters and words will be acceped, they are divided in four cat
 
 ### Separators
 
-The only separator accepted is the parenthesis separator. It can be the opening paranthesis '(' and the closing parenthesis ')', as well. Separators are useful to set the priority of the expression, for example, the **10 + 10 / 5** is different that **(10 + 10)/5**.
+The only separator accepted is the parenthesis separator. It can be the opening paranthesis '(' and the closing parenthesis ')', as well. Separators are useful to set the priority of the expression, for example, the **10 + 10 / 5** is different than **(10 + 10)/5**.
 
 ## How it works
 

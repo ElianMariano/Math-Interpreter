@@ -17,9 +17,6 @@ static char *st_exp;
 // Current token or keyword analyzed
 static char *token;
 
-// The memory length of the token
-static int length;
-
 // Index of the current character analyzed
 static int lookahead;
 
@@ -43,14 +40,5 @@ static void func2();
 
 // Recognize a string as correct and adds it to the stack
 static void recognize(char *token);
-
-// Appends the character in the token variable
-static void append(char c);
-
-// Get next substring of given length
-static char* get_substring(int length);
-
-// Gets the space of the expression
-static void get_spaces();
 
 #endif
