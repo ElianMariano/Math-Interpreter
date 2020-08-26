@@ -6,7 +6,7 @@
     The factor production can be a digit or an expression
     between parentheses.
 
-    The following produtions will be used to handle the
+    The following productions will be used to handle the
     majority of tasks performed by this program:
     factor -> digits|(exp)|function|PI|e
     func2 -> func2(exp, exp)
@@ -63,7 +63,7 @@ int parse_data(struct Stack *st, char *str){
 }
 
 static void expr(){
-    while (st_exp[lookahead] != '\0'){
+    while (st_exp[lookahead] != '\0' && st_exp[lookahead] != ')'){
         term();
 
         get_spaces(st_exp, &lookahead);
@@ -89,9 +89,6 @@ static void expr(){
                 append(token, '-');
 
                 recognize(token);
-            break;
-            case ')':
-                lookahead++;
             break;
         }
     }
@@ -126,9 +123,6 @@ static void term(){
                 append(token, '/');
 
                 recognize(token);
-            break;
-            case ')':
-                lookahead++;
             break;
         }
 
@@ -200,10 +194,16 @@ static void factor(){
         lookahead++;
     }
     else if (st_exp[lookahead] == '(') {
-        while(st_exp[lookahead] == '(')
+        if (st_exp[lookahead] == '('){
             lookahead++;
 
-        expr();
+            expr();
+        }
+
+        get_spaces(st_exp, &lookahead);
+
+        if (st_exp[lookahead] == ')')
+            lookahead++;
     }
 }
 
@@ -236,7 +236,7 @@ static void func2(){
 
 static void recognize(char *token){
     // push(stack, token);
-    printf("%s", token);
+    printf("%s ", token);
 
     resize_assing(token, "");
 }
