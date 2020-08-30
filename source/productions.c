@@ -193,6 +193,9 @@ static void factor(){
 
         lookahead++;
     }
+    else if (is_substring_function(st_exp, lookahead)){
+        function();
+    }
     else if (st_exp[lookahead] == '(') {
         if (st_exp[lookahead] == '('){
             lookahead++;
@@ -208,29 +211,44 @@ static void factor(){
 }
 
 static void function(){
-    if (!isdigit(st_exp[lookahead])){
-        append(token, st_exp[lookahead]);
+    if (strcmp(get_substring(st_exp, lookahead, 3), "sin") == 0){
+        lookahead += 3;
+
+        get_spaces(st_exp, &lookahead);
+
+        factor();
+
+        resize_assing(token, "sin");
+
+        recognize(token);
     }
-    else if (st_exp[lookahead] == '('){
-        // expectParenthesis++;
+    else if (strcmp(get_substring(st_exp, lookahead, 3), "cos") == 0){
+        lookahead += 3;
+
+        get_spaces(st_exp, &lookahead);
+
+        factor();
+
+        resize_assing(token, "cos");
+
+        recognize(token);
     }
-    else if (st_exp[lookahead] == ')'){
-        // expectParenthesis--;
+    else if (strcmp(get_substring(st_exp, lookahead, 3), "tan") == 0){
+        lookahead += 3;
+
+        get_spaces(st_exp, &lookahead);
+
+        factor();
+
+        resize_assing(token, "tan");
+
+        recognize(token);
     }
 }
 
 static void func2(){
     if (!isdigit(st_exp[lookahead])){
         append(token, st_exp[lookahead]);
-    }
-    else if (st_exp[lookahead] == '('){
-        // expectParenthesis++;
-    }
-    else if (st_exp[lookahead] == ','){
-        // to do
-    }
-    else if (st_exp[lookahead] == ')'){
-        // expectParenthesis--;
     }
 }
 

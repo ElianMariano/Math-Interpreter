@@ -6,6 +6,12 @@ OBJ := $(patsubst %.c,%.o,$(SRC))
 output: $(OBJ)
 	@echo "Linking object files $^"
 	$(CC) -o output $^
+
+	if [ ! -d "$(DIR)" ]; then \
+		echo "Creating '$(DIR)' folder"; \
+		mkdir $(DIR); \
+	fi
+
 	@echo "Moving file to $(DIR) directory"
 	mv *.o $(DIR)
 
